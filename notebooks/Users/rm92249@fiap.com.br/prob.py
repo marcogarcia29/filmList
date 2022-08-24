@@ -9,13 +9,11 @@ my_headers = {
 
 query = {'query': 'Nemo'}
 response = requests.get("https://api.themoviedb.org/3/search/movie?", headers=my_headers, params=query)
-json = response.json()
-[json[i] for i in json]
+print(response.json())
 
 # COMMAND ----------
 
-title = json['results']
-for i in title:
+for i in response.json()['results']:
     global image_url
     print(i['original_title'])
     print(f"nota média do filme: {i['vote_average']}")
