@@ -7,7 +7,7 @@ my_headers = {
   'Content-type' : 'application/json'
 }
 
-query = {'query': 'Nemo'}
+query = {'query': 'A'}
 response = requests.get("https://api.themoviedb.org/3/search/movie?", headers=my_headers, params=query)
 print(response.json())
 
@@ -22,3 +22,27 @@ for i in response.json()['results']:
 
 # COMMAND ----------
 
+i=0
+arr = []
+while i < 100:
+    movies_list = requests.get(f"https://api.themoviedb.org/3/movie/{i}", headers=my_headers)
+    arr.append(movies_list.json())
+    i = i + 1
+
+
+
+# COMMAND ----------
+
+for i in arr:
+    print(f"{i}\n")
+
+# COMMAND ----------
+
+for i in arr:
+    for key, val in i.items():
+        if key == "success" and val == False:
+            print("Data not found")
+            break
+        else:
+            print(f"{key} : {val}")
+    print("----------")
