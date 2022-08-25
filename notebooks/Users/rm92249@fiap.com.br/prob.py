@@ -1,7 +1,7 @@
 # Databricks notebook source
 import requests
 
-access_token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYWUxMTEwY2Q1NDIyOGFkZjc3NzFhZmJiNTBmYjBlMCIsInN1YiI6IjYzMDJkZTcwN2Q0MWFhMDA4MTUzYjkxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.tRr8KtqXlDujZjIaC5FVpLaHj11O3H4-2EvD48zLjXo"
+access_token = ""
 my_headers = {
   'Authorization' : f'Bearer {access_token}',
   'Content-type' : 'application/json'
