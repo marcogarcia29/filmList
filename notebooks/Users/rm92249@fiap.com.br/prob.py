@@ -46,3 +46,4 @@ for i in arr:
         else:
             print(f"{key} : {val}")
     print("----------")
+   
