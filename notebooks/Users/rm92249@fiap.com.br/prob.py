@@ -32,14 +32,6 @@ while i < 100:
     arr.append(movies_list.json())
     i = i + 1
 
-
-
-# COMMAND ----------
-
-for i in arr:
-    print(f"{i}\n")
-len(arr)
-
 # COMMAND ----------
 
 import pandas as pd
@@ -60,5 +52,4 @@ print(output.head())
 
 # COMMAND ----------
 
-pd.reset_option('max_columns')
 print(output['genres'])
