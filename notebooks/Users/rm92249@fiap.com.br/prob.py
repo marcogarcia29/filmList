@@ -1,11 +1,17 @@
 # Databricks notebook source
 import requests
 
-access_token = ""
-my_headers = {
-  'Authorization' : f'Bearer {access_token}',
-  'Content-type' : 'application/json'
-}
+
+def useApi(access_token):
+    global my_headers
+    my_headers = {
+        'Authorization' : f'Bearer {access_token}',
+        'Content-type' : 'application/json'
+    }
+
+
+
+useApi("")
 
 query = {'query': 'A'}
 response = requests.get("https://api.themoviedb.org/3/search/movie?", headers=my_headers, params=query)
@@ -29,21 +35,24 @@ while i < 100:
     arr.append(movies_list.json())
     i = i + 1
 
-
-
 # COMMAND ----------
 
-for i in arr:
-    print(f"{i}\n")
+import pandas as pd
 
-# COMMAND ----------
+output = pd.DataFrame()
 
 for i in arr:
     for key, val in i.items():
         if key == "success" and val == False:
-            print("Data not found")
+            #print("Data not found")
             break
         else:
-            print(f"{key} : {val}")
-    print("----------")
-   
+            output = output.append(i, ignore_index=True)
+            #print(f"{key} : {val}")
+    #print("----------")
+
+print(output.head())
+
+# COMMAND ----------
+
+print(output['genres'])
