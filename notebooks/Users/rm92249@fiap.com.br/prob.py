@@ -1,12 +1,15 @@
 # Databricks notebook source
 import requests
 
+
 def useApi(access_token):
     global my_headers
     my_headers = {
         'Authorization' : f'Bearer {access_token}',
         'Content-type' : 'application/json'
     }
+
+
 
 useApi("")
 
