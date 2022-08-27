@@ -1,15 +1,12 @@
 # Databricks notebook source
 import requests
 
-
 def useApi(access_token):
     global my_headers
     my_headers = {
         'Authorization' : f'Bearer {access_token}',
         'Content-type' : 'application/json'
     }
-
-
 
 useApi("")
 
@@ -35,24 +32,62 @@ while i < 100:
     arr.append(movies_list.json())
     i = i + 1
 
+
+
+# COMMAND ----------
+
+for i in arr:
+    print(f"{i}\n")
+len(arr)
+
 # COMMAND ----------
 
 import pandas as pd
 
-output = pd.DataFrame()
+arr = pd.DataFrame(arr)
 
-for i in arr:
-    for key, val in i.items():
-        if key == "success" and val == False:
+#for i in arr:
+    #for key, val in i.items():
+        #if key == "success" and val == False:
             #print("Data not found")
-            break
-        else:
-            output = output.append(i, ignore_index=True)
+            #break
+        #else:
             #print(f"{key} : {val}")
+            #print(i)
+            #output = output.append(i, ignore_index=True)
     #print("----------")
 
-print(output.head())
+#print(arr.iloc[[1]])
+update = arr
+for i, x in enumerate(update['status_code']):
+    if x == 34:
+        update = update.drop(i)
+print(update)
 
 # COMMAND ----------
 
-print(output['genres'])
+pd.reset_option('max_columns')
+print(arr['genres'])
+
+# COMMAND ----------
+
+df = spark.createDataFrame(arr)
+df.show(n=50,vertical=True)
+
+# COMMAND ----------
+
+df2 = df.filter(df.status_code==34)
+df2.show()
+
+# COMMAND ----------
+
+display(df)
+
+# COMMAND ----------
+
+df.write.format("json").mode("overwrite").save("/teste/dadosFilmes")
+
+# COMMAND ----------
+
+df_success = spark.read.json('dbfs:/teste/dadosFilmes/part-00000-tid-5064522810776596884-efae8b49-69bb-455c-86c5-a84674f7490d-32-1-c000.json')
+df.show(vertical=True)
