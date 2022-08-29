@@ -66,18 +66,12 @@ print(update)
 
 # COMMAND ----------
 
-pd.reset_option('max_columns')
-print(arr['genres'])
+print(update['genres'])
 
 # COMMAND ----------
 
-df = spark.createDataFrame(arr)
+df = spark.createDataFrame(update)
 df.show(n=50,vertical=True)
-
-# COMMAND ----------
-
-df2 = df.filter(df.status_code==34)
-df2.show()
 
 # COMMAND ----------
 
@@ -85,9 +79,24 @@ display(df)
 
 # COMMAND ----------
 
+df.columns
+
+# COMMAND ----------
+
+#Drop columns that only returns NAN
+
+df = df.drop('success', 'status_code', 'status_message')
+display(df)
+
+# COMMAND ----------
+
+display(df.sort("title"))
+
+# COMMAND ----------
+
 df.write.format("json").mode("overwrite").save("/teste/dadosFilmes")
 
 # COMMAND ----------
 
-df_success = spark.read.json('dbfs:/teste/dadosFilmes/part-00000-tid-5064522810776596884-efae8b49-69bb-455c-86c5-a84674f7490d-32-1-c000.json')
+df_success = spark.read.json('dbfs:/teste/dadosFilmes/part-00000-tid-7997115978503789053-3fd9fdce-5b1f-44bb-b7ee-673d4f272fc6-30-1-c000.json')
 df.show(vertical=True)
